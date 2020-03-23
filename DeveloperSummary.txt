@@ -1,0 +1,53 @@
+Deloitte Technical exercise developer summary.
+==============================================
+
+Disclaimer:
+-----------
+This code has been developed to complete challenge at Deloitte.
+
+
+Mulesoft Anypoint Setup Issues:
+-------------------------------
+-> Admin access for laptop.
+-> Anypoint studio version 4.xx is not compatible with DataWeave v1
+-> Could not enable Maven support as it requires Mulesoft Maven repo access.
+
+
+Supplied webservice issues:
+---------------------------
+-> The SOAP webservice at URL http://www.webservicex.com/globalweather.asmx?WSDL was unavailable. Used Docker image for the service.
+-> Webservice provide with the docker image embeded the content in two CDATA elements (<![CDATA[ <![CDATA[ ]] ]]) which was wrong. 
+   Corrected the docker image. New docker sample is available in repo.
+
+   
+Approaches taken:
+-----------------
+
+-> REST APIs
+Mapped SOAP webservices with corrsponsing REST APIs. Used RAML for defining the REST specs.
+
+--> REST API : /countries
+Used XSLT transformation to select all distinct Countries from the webservice response.
+
+--> REST API : /countries/{country}/cities
+Used Dataweave transformation to select Cities from the webservice response.
+Used filter to select cities for a particular country.
+Validation added for path param : country
+
+--> REST API : /countries/{country}/cities/{city}/weather
+Used Dataweave transformation to select the webservice weather response to JSON.
+Used filter to select weather for a particular city.
+Validation added for path param : country, city
+
+
+NOTE: 
+-----
+--> Some endpoints like /countries/{country}, /countries/{country}/cities/{city} are left out as there was nothing unique to demonstrate here.
+--> Security aspects are not included or demonstrated.
+--> MIME type application/json is used to return the output.
+--> Comprehensive use of HTTP status codes and headers is not demonstrated but left out for discussion.
+--> Unit tests are added only for happy path scenarios.
+
+
+
+ 
