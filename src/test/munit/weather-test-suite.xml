@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <munit:config mock-connectors="false" mock-inbounds="false" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:weather.xml"/>
+    </spring:beans>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8081" basePath="/weathermonitor/api/v1" doc:name="HTTP Request Configuration"/>
+    <munit:test name="weather-test-suite-get:/countries:weather-configTest" description="Test">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;citiesSoapTestResponseCdataSection.xml&quot;).asString()]" mimeType="application/xml"/>
+        </mock:when>
+        <flow-ref name="get:/countries:weather-config" doc:name="Flow-ref to get:/countries:weather-config"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The response payload is not correct!" 
+            expectedValue="#[getResource(&quot;countriesJsonTestResponse.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" 
+            actualValue="#[payload.replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="assert that - payload is as expected" />
+    </munit:test>
+    <munit:test name="weather-test-suite-get:/countries/{country}/cities:weather-configTest" description="Test">       
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;citiesSoapTestResponseCdataSection.xml&quot;).asString()]" mimeType="application/xml"/>
+        </mock:when>
+        <set-variable variableName="country" value="Australia" doc:name="Variable"/>
+        <flow-ref name="get:/countries/{country}/cities:weather-config" doc:name="Flow-ref to get:/countries/{country}/cities:weather-config"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The response payload is not correct!" 
+            expectedValue="#[getResource(&quot;citiesJsonTestResponse.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" 
+            actualValue="#[payload.replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="assert that - payload is as expected" />
+    </munit:test>
+    <munit:test name="weather-test-suite-get:/countries/{country}/cities/{city}/weather:weather-configTest" description="Test">       
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[getResource(&quot;weatherSoapTestResponseCdataSection.xml&quot;).asString()]" mimeType="application/xml"/>
+        </mock:when>
+        <set-variable variableName="country" value="Australia" doc:name="Variable"/>
+        <set-variable variableName="city" value="Melbourne" doc:name="Variable"/>
+        <flow-ref name="get:/countries/{country}/cities/{city}/weather:weather-config" doc:name="Flow-ref to get:/countries/{country}/cities/{city}/weather:weather-config"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The response payload is not correct!" 
+            expectedValue="#[getResource(&quot;weatherJsonTestResponse.json&quot;).asString().replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" 
+            actualValue="#[payload.replaceAll(&quot;\\s+&quot;,&quot;&quot;)]" doc:name="assert that - payload is as expected" />
+    </munit:test>    
+</mule>

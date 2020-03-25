@@ -1,0 +1,18 @@
+<NewDataSet>
+  <Table>
+    <Country>Australia</Country>
+    <City>Sydney</City>
+  </Table>
+  <Table>
+    <Country>Australia</Country>
+    <City>Melbourne</City>
+  </Table>
+  <Table>
+    <Country>Australia</Country>
+    <City>Brisbane</City>
+  </Table>
+  <Table>
+    <Country>Australia</Country>
+    <City>Perth</City>
+  </Table>
+</NewDataSet>

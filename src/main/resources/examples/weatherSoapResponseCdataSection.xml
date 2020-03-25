@@ -1,0 +1,11 @@
+<NewDataSet>
+    <Location>Brisbane</Location>
+    <Time>11 AM</Time>
+    <Wind>10 km per hour</Wind>
+    <Visibility>25 km</Visibility>
+    <SkyConditions>sunny</SkyConditions>
+    <Temperature>28</Temperature>
+    <DewPoint>2 C</DewPoint>
+    <RelativeHumidity>35</RelativeHumidity>
+    <Status>Normal</Status>
+</NewDataSet>

@@ -1,0 +1,12 @@
+{
+  "cities": [
+    {
+      "city":"Melbourne",
+      "country":"Australia"
+    },
+    {
+      "city":"Brisbane",
+      "country":"Australia"
+    }
+  ]
+}
