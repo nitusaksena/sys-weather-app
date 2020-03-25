@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
     </apikit:config>
     <ws:consumer-config name="Weather_Soap_Service_Consumer" wsdlLocation="http://localhost:8080/GlobalWeather?WSDL" service="GlobalWeather" port="GlobalWeatherSoap" serviceAddress="http://localhost:8080/GlobalWeather" doc:name="Web Service Consumer"/>
     <flow name="weather-main">
-        <http:listener config-ref="weather-httpListenerConfig" path="/weathermonitor/api/v1/*" doc:name="HTTP">
+        <http:listener config-ref="weather-httpListenerConfig" path="/sys-weather-app/api/v1/*" doc:name="HTTP">
             <http:response-builder>
                 <http:header headerName="cache-control" value="max-age=3600"/>
             </http:response-builder>

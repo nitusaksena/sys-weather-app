@@ -9,7 +9,7 @@ Run the src\main\app\weather.xml by right clicking and selecting option "Run as"
 
 ## APIs
 Following APIs are implemented:
-- /countries ex. http://localhost:8081/weathermonitor/api/v1/countries/
-- /countries/{country}/cities ex. http://localhost:8081/weathermonitor/api/v1/countries/Australia/cities
-- /countries/{country}/cities/{city}/weather ex. http://localhost:8081/weathermonitor/api/v1/countries/Australia/cities/Melbourne/weather
+- /countries ex. http://localhost:8081//sys-weather-app/api/v1/countries/
+- /countries/{country}/cities ex. http://localhost:8081//sys-weather-app/api/v1/countries/Australia/cities
+- /countries/{country}/cities/{city}/weather ex. http://localhost:8081//sys-weather-app/api/v1/countries/Australia/cities/Melbourne/weather
 
